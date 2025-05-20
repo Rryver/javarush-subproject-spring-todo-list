@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>ToDo List</title>
+
+    <div th:replace="/partials/head-imports"></div>
+</head>
+<body>
+
+<main role="main" class="flex-shrink-0">
+    <div th:replace="/partials/header :: header"></div>
+
+    <div class="container mt-5">
+        <div th:if="${success}" th:text="${success}" class="alert alert-success"></div>
+        <div th:if="${error}" th:text="${error}" class="alert alert-danger"></div>
+
+        <div class="d-flex justify-content-between align-items-baseline">
+            <div><h1>Список задач</h1></div>
+            <a th:href="@{/create}" class="btn btn-success h-25">Создать</a>
+        </div>
+
+        <div class="content">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="task : ${tasksPage.getContent()}">
+                    <th scope="row" th:text="${task.id}"></th>
+                    <td th:text="${task.description}"></td>
+                    <td th:text="${task.status}"></td>
+                    <td style="width: 0"><a th:href="@{/update/{id}(id=${task.id})}"
+                                            class="btn btn-outline-dark">Обновить</a></td>
+                    <td style="width: 0">
+                        <a th:href="@{/delete/{id}(id=${task.id})}" class="btn btn-outline-danger" onclick="confirm('Вы точно хотите удалить задачу?')">Удалить</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <ul class="pagination" th:if="${tasksPage.getTotalPages() > 1}">
+                <li th:class="(${tasksPage.isFirst() ? 'disabled ' : ''}) + 'page-item'">
+                    <a class="page-link" th:href="@{/(page=${tasksPage.getNumber()})}" tabindex="-1">Previous</a>
+                </li>
+
+                <li th:each="pageNumber : ${#numbers.sequence(((tasksPage.getNumber() - 5) < 0 ? 0 : (tasksPage.getNumber() - 5)), (tasksPage.getNumber() + 5 >= (tasksPage.getTotalPages() - 1) ? tasksPage.getTotalPages() - 1 : tasksPage.getNumber() + 5))}"
+                    th:class="(${pageNumber == tasksPage.getNumber()} ? 'active ' : '') + 'page-item'" >
+                    <a class="page-link" th:href="@{/(page=${pageNumber + 1})}" th:text="${pageNumber + 1}"></a>
+                </li>
+
+                <li th:class="(${tasksPage.isLast() ? 'disabled ' : ''}) + 'page-item'">
+                    <a class="page-link" th:href="@{/(page=${tasksPage.getNumber() + 2})}">Next</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<div th:replace="/partials/footer :: footer"></div>
+<div th:replace="/partials/scripts :: script"></div>
+
+</body>
+</html>

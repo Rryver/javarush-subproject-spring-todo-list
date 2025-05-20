@@ -1,0 +1,26 @@
+td img {
+    width: 100%;
+    height: auto;
+}
+
+table.detail-view th {
+    width: 30%;
+}
+
+.new-record {
+    background-color: #47a8ff1c;
+}
+
+.btn-new-record {
+    background-color: #ff8a37;
+}
+
+.text-color-red {
+    color: #FF1B00;
+}
+
+@media screen and (min-width: 1400px) {
+    .container {
+        max-width: 1140px;
+    }
+}
