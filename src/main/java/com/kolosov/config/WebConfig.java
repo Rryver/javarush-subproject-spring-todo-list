@@ -17,10 +17,10 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @EnableWebMvc
 @ComponentScan("com.kolosov")
 public class WebConfig implements WebMvcConfigurer {
-    private static final String VIEWS_PREFIX = "/templates/";
+    private static final String VIEWS_PREFIX = "classpath:/templates/";
     private static final String VIEWS_SUFFIX = ".html";
     private static final String VIEWS_ENCODING = "UTF-8";
-    private static final String RESOURCES_LOCATION = "/resources/";
+    private static final String RESOURCES_LOCATION = "classpath:/static/";
     private static final String RESOURCES_HANDLER = RESOURCES_LOCATION + "**";
 
     private final ApplicationContext applicationContext;
@@ -31,8 +31,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(RESOURCES_HANDLER)
-                .addResourceLocations("/")
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/")
+//        registry.addResourceHandler("/static/**")
+//                .addResourceLocations(RESOURCES_LOCATION)
                 .setCachePeriod(31556926);
     }
 

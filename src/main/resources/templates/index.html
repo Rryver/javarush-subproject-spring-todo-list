@@ -3,12 +3,12 @@
 <head>
     <title>ToDo List</title>
 
-    <div th:replace="/partials/head-imports"></div>
+    <div th:replace="partials/head-imports"></div>
 </head>
 <body>
 
 <main role="main" class="flex-shrink-0">
-    <div th:replace="/partials/header :: header"></div>
+    <div th:replace="partials/header :: header"></div>
 
     <div class="container mt-5">
         <div th:if="${success}" th:text="${success}" class="alert alert-success"></div>
@@ -36,8 +36,9 @@
                     <th scope="row" th:text="${task.id}"></th>
                     <td th:text="${task.description}"></td>
                     <td th:text="${task.status}"></td>
-                    <td style="width: 0"><a th:href="@{/update/{id}(id=${task.id})}"
-                                            class="btn btn-outline-dark">Обновить</a></td>
+                    <td style="width: 0">
+                        <a th:href="@{/update/{id}(id=${task.id})}" class="btn btn-outline-dark">Обновить</a>
+                    </td>
                     <td style="width: 0">
                         <a th:href="@{/delete/{id}(id=${task.id})}" class="btn btn-outline-danger" onclick="confirm('Вы точно хотите удалить задачу?')">Удалить</a>
                     </td>
@@ -63,8 +64,8 @@
     </div>
 </main>
 
-<div th:replace="/partials/footer :: footer"></div>
-<div th:replace="/partials/scripts :: script"></div>
+<div th:replace="partials/footer :: footer"></div>
+<div th:replace="partials/scripts :: script"></div>
 
 </body>
 </html>
